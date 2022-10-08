@@ -28,6 +28,9 @@ public class GoogleSearchFunctionality {
         Map<String, List<SearchResultClass>> allSearchResulList = new LinkedHashMap<>();
 
         for (String eachSearchItem : googleSearchItemList) {
+            if (eachSearchItem.isEmpty()){
+                continue;
+            }
             googleSearchPage.searchInput.sendKeys(eachSearchItem + Keys.ENTER);
 
             List<WebElement> urlList = googleSearchPage.url;
