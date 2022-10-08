@@ -67,33 +67,6 @@ public class GoogleSearchFunctionality {
         System.out.println("allSearchResulList = " + allSearchResulList);
 
 
-//        for (WebElement webElement : googleSearchPage.allSearchResultList) {
-//            List<Map<String, String>> searchResultList = new ArrayList<>();
-//            String[] split = webElement.getText().split("\\n");
-//            for (String s : split) {
-//                System.out.println("s = " + s);
-//            }
-//            for (int i = 0; i < split.length; i++) {
-//                Map<String, String> searchResult = new LinkedHashMap<>();
-//                searchResult.put("title",split[0]);
-//                searchResult.put("url",split[1]);
-//                searchResult.put("description",split[2]);
-//                searchResultList.add(searchResult);
-//            }
-//            System.out.println("searchResultList = " + searchResultList);
-
-//        }
-
-
-//        for (String eachSearcItem : googleSearchItemList) {
-//            Map<String,String>saachDetail=new LinkedHashMap<>();
-//            googleSearchPage.searchInput.sendKeys(eachSearcItem + Keys.ENTER);
-//            if(GoogleUtils.doesSearchResultExist(googleSearchPage.resultStats.getText())){
-//
-//            }
-//
-//
-//        }
 
     }
 }
