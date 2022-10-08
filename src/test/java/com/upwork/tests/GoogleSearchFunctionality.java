@@ -39,11 +39,16 @@ public class GoogleSearchFunctionality {
             List<SearchResultClass> searchResultList = new ArrayList<>();
             int totalSearchResultNumber = 0;
             while (totalSearchResultNumber < 10) {
-
+                List<String> checkNestedUrlList = new ArrayList<>();
                 for (int i = 0; i < urlList.size() && totalSearchResultNumber < 10; i++) {
                     SearchResultClass searchResultObject = new SearchResultClass(url, description, title);
                     url = urlList.get(i).getAttribute("href");
+                    String mainUrl=url.split("/")[2];//this will find main url
+                    if (checkNestedUrlList.contains(mainUrl)){
+                        break;
+                    }
                     searchResultObject.setUrl(url);
+                    checkNestedUrlList.add(mainUrl); //this will add each url to check for nested
 
                     description = descriptionList.get(i).getText();
                     searchResultObject.setDescription(description);
@@ -54,7 +59,7 @@ public class GoogleSearchFunctionality {
                     searchResultList.add(searchResultObject);
                     totalSearchResultNumber++;
                 }
-                googleSearchPage.googleNextPage.click();
+                googleSearchPage.nextPage.click();
 
 
             }
@@ -65,7 +70,6 @@ public class GoogleSearchFunctionality {
 
         }
         System.out.println("allSearchResulList = " + allSearchResulList);
-
 
 
     }
