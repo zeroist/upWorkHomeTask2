@@ -22,13 +22,13 @@ public class BingSearchPage {
     public WebElement nextPage;
 
 
-    @FindBy(css = "[class=\" b_lineclamp2\"]")
+    @FindBy(xpath = "//p[starts-with(@class,\" b_lineclamp\")]")
     public List<WebElement> description;
 
-    @FindBy(xpath = "//div[@class=\"b_title\"]/a")
+    @FindBy(xpath = "//p[starts-with(@class,\" b_lineclamp\")]/../preceding-sibling::div[@class=\"b_title\"]/a")
     public List<WebElement> url;
 
-    @FindBy(xpath = "//div[@class=\"b_title\"]/a/following-sibling::h2/a")
+    @FindBy(xpath = "//p[starts-with(@class,\" b_lineclamp\")]/../preceding-sibling::div[@class=\"b_title\"]/h2/a")
     public List<WebElement> title;
 
 

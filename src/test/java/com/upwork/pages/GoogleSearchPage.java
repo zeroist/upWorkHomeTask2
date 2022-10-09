@@ -30,6 +30,9 @@ public class GoogleSearchPage {
 
     @FindBy(xpath = "(//div[@class=\"MjjYud\"])//div[starts-with(@class,\"VwiC3b\")]/../preceding-sibling::div[contains(@class,\"jGGQ5e\")]//h3")
     public List<WebElement> title;
+
+
+
     // //div[@class="MjjYud"]
     // //div[@class="MjjYud"]//h3
     // //div[@class="MjjYud"]//h3/..
