@@ -25,13 +25,13 @@ public class GoogleSearchPage {
     @FindBy(xpath = "(//div[@class=\"MjjYud\"])//div[starts-with(@class,\"VwiC3b\")]")
     public List<WebElement> description;
 
-    @FindBy(xpath = "(//div[@class=\"MjjYud\"])//div[starts-with(@class,\"VwiC3b\")]/../preceding-sibling::div[contains(@class,\"jGGQ5e\")]/div[@class=\"yuRUbf\"]/a")
+    @FindBy(xpath = "(//div[@class=\"MjjYud\"])//div[starts-with(@class,\"VwiC3b\")]/../preceding-sibling::div[contains(@href,\"\")]//h3/..")
     public List<WebElement> url;
 
-    @FindBy(xpath = "(//div[@class=\"MjjYud\"])//div[starts-with(@class,\"VwiC3b\")]/../preceding-sibling::div[contains(@class,\"jGGQ5e\")]//h3")
+    @FindBy(xpath = "(//div[@class=\"MjjYud\"])//div[starts-with(@class,\"VwiC3b\")]/../preceding-sibling::div[contains(@href,\"\")]//h3")
     public List<WebElement> title;
 
-
+// (//div[@class="MjjYud"])//div[starts-with(@class,"VwiC3b")]/../preceding-sibling::div[contains(@class,"jGGQ5e")]//h3
 
     // //div[@class="MjjYud"]
     // //div[@class="MjjYud"]//h3

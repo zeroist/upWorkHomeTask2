@@ -5,9 +5,9 @@ import com.upwork.pages.GoogleSearchPage;
 import com.upwork.utilities.GoogleUtils;
 import com.upwork.utilities.ConfigurationReader;
 import com.upwork.utilities.Driver;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 
 
 import java.util.ArrayList;
@@ -20,22 +20,25 @@ import java.util.Map;
 public class GoogleSearchFunctionality {
 
     public static void main(String[] args) {
-        Actions actions = new Actions(Driver.getDriver());
+
         List<String> searchItemList = GoogleUtils.createGoogleSearchItemList();
         ConfigurationReader.setBrowser("chrome");
+
         ConfigurationReader.setSearchEngine("google");
         String searchEngine = ConfigurationReader.getProperty("searchEngine");
         Driver.getDriver().get(searchEngine);
         Driver.getDriver().manage().deleteAllCookies();
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
 
-        Map<String, List<SearchResultClass>> allSearchResulList = new LinkedHashMap<>();
+        Map<String, List<SearchResultClass>> allSearchResulListFromGoogle = new LinkedHashMap<>();
 
-        GoogleSearchPage googleSearchPage = new GoogleSearchPage();
         for (String eachSearchItem : searchItemList) {
+            GoogleSearchPage googleSearchPage = new GoogleSearchPage();
             if (eachSearchItem.isEmpty()) {
                 continue;
             }
             googleSearchPage.searchInput.sendKeys(eachSearchItem + Keys.ENTER);
+            js.executeScript("arguments[0].scrollIntoView(true);", googleSearchPage.nextPage);
 
             List<WebElement> urlList = googleSearchPage.url;
             List<WebElement> descriptionList = googleSearchPage.description;
@@ -45,20 +48,23 @@ public class GoogleSearchFunctionality {
 
             List<SearchResultClass> searchResultList = new ArrayList<>();
             int totalSearchResultNumber = 0;
+            String previousUrl="";
             while (totalSearchResultNumber < 10) {
 
-                List<String> checkNestedUrlList = new ArrayList<>();
 
-                for (int i = 0; i < urlList.size() && totalSearchResultNumber < 10; i++) {
+                for (int i = 0; i < descriptionList.size() && totalSearchResultNumber < 10; i++) {
 
                     SearchResultClass searchResultObject = new SearchResultClass(url, description, title);
                     url = urlList.get(i).getAttribute("href");
-                    String mainUrl = url.split("/")[2];//this will find main url
-                    if (checkNestedUrlList.contains(mainUrl)) {
+                    System.out.println("url = " + url);
+                    String actualMainUrl = url.split("/")[2];//this will find main url
+                    if (actualMainUrl.equals(previousUrl)) {
                         break;
                     }
+                    previousUrl=actualMainUrl;
+
                     searchResultObject.setUrl(url);
-                    checkNestedUrlList.add(mainUrl); //this will add each url to check for nested
+
 
                     description = descriptionList.get(i).getText();
                     searchResultObject.setDescription(description);
@@ -69,32 +75,34 @@ public class GoogleSearchFunctionality {
                     searchResultList.add(searchResultObject);
                     totalSearchResultNumber++;
                 }
+                js.executeScript("arguments[0].scrollIntoView(true);", googleSearchPage.nextPage);
                 googleSearchPage.nextPage.click();
 
 
             }
 
 
-            allSearchResulList.put(eachSearchItem, searchResultList);
+            allSearchResulListFromGoogle.put(eachSearchItem, searchResultList);
             googleSearchPage.searchInput.clear();
 
         }
-        System.out.println("allSearchResulList = " + allSearchResulList);
+
         System.out.println("--------------------------------------------------------");
 
         ConfigurationReader.setSearchEngine("bing");
         searchEngine = ConfigurationReader.getProperty("searchEngine");
-        System.out.println("searchEngine = " + searchEngine);
         Driver.getDriver().get(searchEngine);
         Driver.getDriver().manage().deleteAllCookies();
-        List<String> SearchItemList = GoogleUtils.createGoogleSearchItemList();
 
-        BingSearchPage bingSearchPage = new BingSearchPage();
+        Map<String, List<SearchResultClass>> allSearchResulListFromBing = new LinkedHashMap<>();
+
         for (String eachSearchItem : searchItemList) {
+            BingSearchPage bingSearchPage = new BingSearchPage();
             if (eachSearchItem.isEmpty()) {
                 continue;
             }
             bingSearchPage.searchInput.sendKeys(eachSearchItem + Keys.ENTER);
+            js.executeScript("arguments[0].scrollIntoView(true);", bingSearchPage.nextPage);
 
             List<WebElement> urlList = bingSearchPage.url;
             List<WebElement> descriptionList = bingSearchPage.description;
@@ -103,15 +111,14 @@ public class GoogleSearchFunctionality {
             String url = "", description = "", title = "";
 
             List<SearchResultClass> searchResultList = new ArrayList<>();
-            int totalSearchResultNumber = 0;
-            while (totalSearchResultNumber < 10) {
+            int totalSearchResultCounter = 0;
+            while (totalSearchResultCounter < 10) {
 
-                for (int i = 0; i < urlList.size() && totalSearchResultNumber < 10; i++) {
-
+                for (int i = 0; i < descriptionList.size() && totalSearchResultCounter < 10; i++) {
 
 
                     SearchResultClass searchResultObject = new SearchResultClass(url, description, title);
-                    url = urlList.get(i).getAttribute("href");
+                    url = urlList.get(i).getText();
                     searchResultObject.setUrl(url);
 
 
@@ -122,20 +129,37 @@ public class GoogleSearchFunctionality {
                     searchResultObject.setTitle(title);
 
                     searchResultList.add(searchResultObject);
-                    totalSearchResultNumber++;
+                    totalSearchResultCounter++;
                 }
-                actions.moveToElement(bingSearchPage.nextPage).perform();
+                js.executeScript("arguments[0].scrollIntoView(true);", bingSearchPage.nextPage);
+
                 bingSearchPage.nextPage.click();
 
 
             }
 
 
-            allSearchResulList.put(eachSearchItem, searchResultList);
+            allSearchResulListFromBing.put(eachSearchItem, searchResultList);
             bingSearchPage.searchInput.clear();
 
         }
-        System.out.println("allSearchResulList = " + allSearchResulList);
+        allSearchResulListFromGoogle.forEach((x,y)->{
+            for (SearchResultClass searchResultClass : y) {
+                System.out.println("searchResultClass.getTitle() = " + searchResultClass.getTitle());
+                System.out.println("searchResultClass.getUrl() = " + searchResultClass.getUrl());
+                System.out.println("searchResultClass.getDescription() = " + searchResultClass.getDescription());
+            }
+
+        });
+
+        allSearchResulListFromBing.forEach((x,y)->{
+            for (SearchResultClass searchResultClass : y) {
+                System.out.println("searchResultClass.getTitle() = " + searchResultClass.getTitle());
+                System.out.println("searchResultClass.getUrl() = " + searchResultClass.getUrl());
+                System.out.println("searchResultClass.getDescription() = " + searchResultClass.getDescription());
+            }
+
+        });
 
 
     }
