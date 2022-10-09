@@ -8,6 +8,8 @@ import com.upwork.utilities.Driver;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 import java.util.ArrayList;
@@ -22,13 +24,15 @@ public class GoogleSearchFunctionality {
     public static void main(String[] args) {
 
         List<String> searchItemList = GoogleUtils.createGoogleSearchItemList();
-        ConfigurationReader.setBrowser("chrome");
+        ConfigurationReader.setBrowser("firefox");
 
         ConfigurationReader.setSearchEngine("google");
         String searchEngine = ConfigurationReader.getProperty("searchEngine");
         Driver.getDriver().get(searchEngine);
         Driver.getDriver().manage().deleteAllCookies();
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        WebDriverWait wait=new WebDriverWait(Driver.getDriver(),30);
+
 
         Map<String, List<SearchResultClass>> allSearchResulListFromGoogle = new LinkedHashMap<>();
 
@@ -56,7 +60,6 @@ public class GoogleSearchFunctionality {
 
                     SearchResultClass searchResultObject = new SearchResultClass(url, description, title);
                     url = urlList.get(i).getAttribute("href");
-                    System.out.println("url = " + url);
                     String actualMainUrl = url.split("/")[2];//this will find main url
                     if (actualMainUrl.equals(previousUrl)) {
                         break;
@@ -65,12 +68,14 @@ public class GoogleSearchFunctionality {
 
                     searchResultObject.setUrl(url);
 
-
+                    wait.until(ExpectedConditions.visibilityOf(descriptionList.get(i)));
                     description = descriptionList.get(i).getText();
                     searchResultObject.setDescription(description);
 
+                    wait.until(ExpectedConditions.visibilityOf(titleList.get(i)));
                     title = titleList.get(i).getText();
                     searchResultObject.setTitle(title);
+
 
                     searchResultList.add(searchResultObject);
                     totalSearchResultNumber++;
