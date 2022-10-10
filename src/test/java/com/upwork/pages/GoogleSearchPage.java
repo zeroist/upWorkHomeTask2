@@ -1,5 +1,6 @@
 package com.upwork.pages;
 
+import com.upwork.tests.SearchResultClass;
 import com.upwork.utilities.Driver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,10 +16,12 @@ public class GoogleSearchPage {
     @FindBy(name = "q")
     public WebElement searchInput;
 
-    @FindBy(id = "result-stats")
+    @FindBy(xpath = "//*[id='result-stats']")
     public WebElement resultStats;
 
-    @FindBy(id = "pnnext")
+    //*[@class='appbar' or @id='taw']
+
+    @FindBy(xpath = "//*[@id='pnnext' or @class='sb_pagN sb_pagN_bp b_widePag sb_bp ']")
     public WebElement nextPage;
 
 
@@ -30,6 +33,8 @@ public class GoogleSearchPage {
 
     @FindBy(xpath = "(//div[@class=\"MjjYud\"])//div[starts-with(@class,\"VwiC3b\")]/../preceding-sibling::div[contains(@href,\"\")]//h3")
     public List<WebElement> title;
+
+
 
 // (//div[@class="MjjYud"])//div[starts-with(@class,"VwiC3b")]/../preceding-sibling::div[contains(@class,"jGGQ5e")]//h3
 

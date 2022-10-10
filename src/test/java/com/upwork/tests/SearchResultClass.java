@@ -1,5 +1,7 @@
 package com.upwork.tests;
 
+import java.util.List;
+
 public class SearchResultClass {
 
     private String url;
@@ -12,6 +14,12 @@ public class SearchResultClass {
       setTitle(title);
       setDescription(description);
     }
+    public SearchResultClass(List<String> list) { //method overloading of constructor
+        setUrl(list.get(0));
+        setTitle(list.get(1));
+        setDescription(list.get(2));
+    }
+
 
     public String getUrl(){
         return url;
@@ -40,9 +48,9 @@ public class SearchResultClass {
 
     @Override
     public String toString() {
-        return "SearchResultClass{" +
-                "url='" + url + '\'' +
-                ", title='" + title + '\'' +
+        return "SearchResultItem{" +
+                "url='" + url + '\'' +"\n"+
+                ", title='" + title + '\'' +"\n"+
                 ", description='" + description + '\'' +
                 '}';
     }
