@@ -1,5 +1,6 @@
 package com.upwork.tests;
 
+import com.upwork.pages.BingSearchPage;
 import com.upwork.pages.GoogleSearchPage;
 import com.upwork.utilities.ConfigurationReader;
 import com.upwork.utilities.Driver;
@@ -25,7 +26,7 @@ public class SearchFunctionality {
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
 
 
-        Map<String, List<SearchResultClass>> allSearchResulListFromGoogle = new LinkedHashMap<>();
+        Map<String, List<SearchResultClass>> allSearchResulList = new LinkedHashMap<>();
 
         GoogleSearchPage googleSearchPage = new GoogleSearchPage();
         searchText = searchText.toLowerCase();
@@ -76,15 +77,118 @@ public class SearchFunctionality {
         }
 
 
-        allSearchResulListFromGoogle.put(searchText, searchResultList);
+        allSearchResulList.put(searchText, searchResultList);
         googleSearchPage.searchInput.clear();
 
-        allSearchResulListFromGoogle.forEach((keyword, listOfSearchResult) -> {
-          //  Map<String, Boolean> doesSearchResultContainKeyword = new LinkedHashMap<>();
-            int totalCount=0;
+        allSearchResulList.forEach((keyword, listOfSearchResult) -> {
+            //  Map<String, Boolean> doesSearchResultContainKeyword = new LinkedHashMap<>();
+            int numberofItem=0;
+            int totalCount = 0;
             for (SearchResultClass eachResult : listOfSearchResult) {
                 int count = 0;
-               // doesSearchResultContainKeyword = new LinkedHashMap<>();
+                // doesSearchResultContainKeyword = new LinkedHashMap<>();
+
+                if (eachResult.getDescription().contains(keyword)) {
+                    count++;
+                }
+
+                if (eachResult.getTitle().contains(keyword)) {
+                    count++;
+                }
+
+                if (eachResult.getUrl().contains(keyword)) {
+                    count++;
+                }
+                numberofItem++;
+
+                if (count > 0) {
+
+                    System.out.print("Result Report for Search Item " + numberofItem + "/10 = ");
+                    //   doesSearchResultContainKeyword.put(keyword, true);
+                    System.out.println("=> keyword \"" + keyword + "\" is found " + count + " times in the search item below\n" + eachResult);
+
+                } else {
+                    //  doesSearchResultContainKeyword.put(keyword, false);
+                    System.out.println("keyword \"" + keyword + "\" is NOT FOUND in following search item\n" + eachResult);
+
+                }
+                if (count > 0) {
+                    totalCount++;
+                }
+            }
+            System.out.println(keyword + " is found in " + totalCount + " search items out of 10");
+
+            //  doesSearchResultContainKeyword.forEach((x, y) -> {
+            //     System.out.println(x + "-" + y);
+            //  });
+
+
+        });
+
+        System.out.println("////////////////////bing/////////////////////////");
+
+        ConfigurationReader.setSearchEngine("bing");
+
+        searchEngine = ConfigurationReader.getProperty("searchEngine");
+        Driver.getDriver().get(searchEngine);
+        Driver.getDriver().manage().deleteAllCookies();
+
+
+        allSearchResulList = new LinkedHashMap<>();
+
+        BingSearchPage bingSearchPage = new BingSearchPage();
+        searchText = searchText.toLowerCase();
+        bingSearchPage.searchInput.sendKeys(searchText + Keys.ENTER);
+
+
+        urlList = bingSearchPage.url;
+        descriptionList = bingSearchPage.description;
+        titleList = bingSearchPage.title;
+
+
+        searchResultList = new ArrayList<>();
+        totalSearchResultNumber = 0;
+
+
+        while (true) {
+            if (SearchUtils.doesSearchResultExist(bingSearchPage.resultStats.getText())) {
+                System.out.println("There is no search result for \"" + searchText + "\" Please try a different search text");
+                System.exit(1);
+            }
+
+            for (int i = 0; i < descriptionList.size() && totalSearchResultNumber < 10; i++) {
+
+
+                description = descriptionList.get(i).getText().toLowerCase();
+                title = titleList.get(i).getText().toLowerCase();
+                url = urlList.get(i).getAttribute("href").toLowerCase();
+
+                SearchResultClass searchResultObject = new SearchResultClass(url, title, description);
+
+
+                searchResultList.add(searchResultObject);
+                totalSearchResultNumber++;
+            }
+            if (totalSearchResultNumber >= 10) {
+                break;
+            }
+            js.executeScript("arguments[0].scrollIntoView(true);", bingSearchPage.nextPage);
+            bingSearchPage.nextPage.click();
+
+
+        }
+
+
+        allSearchResulList.put(searchText, searchResultList);
+        bingSearchPage.searchInput.clear();
+
+        allSearchResulList.forEach((keyword, listOfSearchResult) -> {
+            //  Map<String, Boolean> doesSearchResultContainKeyword = new LinkedHashMap<>();
+            int numberofItem = 0;
+            int totalCount = 0;
+            for (SearchResultClass eachResult : listOfSearchResult) {
+                int count = 0;
+                // doesSearchResultContainKeyword = new LinkedHashMap<>();
 
                 if (eachResult.getDescription().contains(keyword)) {
                     count++;
@@ -98,107 +202,33 @@ public class SearchFunctionality {
                     count++;
                 }
 
-
+                numberofItem++;
                 if (count > 0) {
-                    System.out.println("count = " + count);
-                 //   doesSearchResultContainKeyword.put(keyword, true);
-                    System.out.println("keyword \"" + keyword + "\" is contained "+count+" times in the search item below \n " + eachResult);
-                    System.out.println("---------------------------------------------------------------------------");
+                    System.out.print("Result Report for Search Item " + numberofItem + "/10 = ");
+                    //   doesSearchResultContainKeyword.put(keyword, true);
+                    System.out.println("=> keyword \"" + keyword + "\" is found " + count + " times in the search item below\n" + eachResult);
 
                 } else {
-                    System.out.println("count = " + count);
-                  //  doesSearchResultContainKeyword.put(keyword, false);
-                    System.out.println("keyword \"" + keyword + "\" is NOT CONTAINED in following search item " + eachResult);
-                    System.out.println("---------------------------------------------------------------------------");
+                    //  doesSearchResultContainKeyword.put(keyword, false);
+                    System.out.println("keyword \"" + keyword + "\" is NOT FOUND in following search item\n" + eachResult);
 
                 }
-                if (count>0){
+                if (count > 0) {
                     totalCount++;
                 }
             }
-            System.out.println(keyword + " is contained in " + totalCount + " search items out of 10");
+            System.out.println(keyword + " is found in " + totalCount + " search items out of 10");
 
-          //  doesSearchResultContainKeyword.forEach((x, y) -> {
-           //     System.out.println(x + "-" + y);
-          //  });
+            //  doesSearchResultContainKeyword.forEach((x, y) -> {
+            //     System.out.println(x + "-" + y);
+            //  });
 
 
         });
 
-//        System.out.println("--------------------------------------------------------");
-//
-//        ConfigurationReader.setSearchEngine("bing");
-//        searchEngine = ConfigurationReader.getProperty("searchEngine");
-//        Driver.getDriver().get(searchEngine);
-//        Driver.getDriver().manage().deleteAllCookies();
-//
-//        Map<String, List<SearchResultClass>> allSearchResulListFromBing = new LinkedHashMap<>();
-//
-//        for (String eachSearchItem : searchItemList) {
-//            BingSearchPage bingSearchPage = new BingSearchPage();
-//            if (eachSearchItem.isEmpty()) {
-//                continue;
-//            }
-//            bingSearchPage.searchInput.sendKeys(eachSearchItem + Keys.ENTER);
-//            js.executeScript("arguments[0].scrollIntoView(true);", bingSearchPage.nextPage);
-//
-//            List<WebElement> urlList = bingSearchPage.url;
-//            List<WebElement> descriptionList = bingSearchPage.description;
-//            List<WebElement> titleList = bingSearchPage.title;
-//
-//            String url = "", description = "", title = "";
-//
-//            List<SearchResultClass> searchResultList = new ArrayList<>();
-//            int totalSearchResultCounter = 0;
-//            while (totalSearchResultCounter < 10) {
-//
-//                for (int i = 0; i < descriptionList.size() && totalSearchResultCounter < 10; i++) {
-//
-//
-//                    SearchResultClass searchResultObject = new SearchResultClass(url, description, title);
-//                    url = urlList.get(i).getText();
-//                    searchResultObject.setUrl(url);
-//
-//
-//                    description = descriptionList.get(i).getText();
-//                    searchResultObject.setDescription(description);
-//
-//                    title = titleList.get(i).getText();
-//                    searchResultObject.setTitle(title);
-//
-//                    searchResultList.add(searchResultObject);
-//                    totalSearchResultCounter++;
-//                }
-//                js.executeScript("arguments[0].scrollIntoView(true);", bingSearchPage.nextPage);
-//
-//                bingSearchPage.nextPage.click();
-//
-//
-//            }
-//
-//
-//            allSearchResulListFromBing.put(eachSearchItem, searchResultList);
-//            bingSearchPage.searchInput.clear();
-//
-//        }
-//        allSearchResulListFromGoogle.forEach((x,y)->{
-//            for (SearchResultClass searchResultClass : y) {
-//                System.out.println("searchResultClass.getTitle() = " + searchResultClass.getTitle());
-//                System.out.println("searchResultClass.getUrl() = " + searchResultClass.getUrl());
-//                System.out.println("searchResultClass.getDescription() = " + searchResultClass.getDescription());
-//            }
-//
-//        });
-//
-//        allSearchResulListFromBing.forEach((x,y)->{
-//            for (SearchResultClass searchResultClass : y) {
-//                System.out.println("searchResultClass.getTitle() = " + searchResultClass.getTitle());
-//                System.out.println("searchResultClass.getUrl() = " + searchResultClass.getUrl());
-//                System.out.println("searchResultClass.getDescription() = " + searchResultClass.getDescription());
-//            }
-//
-//        });
-//
-//
+
     }
 }
+
+
+

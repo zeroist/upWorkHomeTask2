@@ -48,10 +48,10 @@ public class SearchResultClass {
 
     @Override
     public String toString() {
-        return "SearchResultItem{\n" +
-                " url         ='" + url + '\'' +"\n"+
-                " title       ='" + title + '\'' +"\n"+
-                " description ='" + description + '\'' +
-                '}';
+        return  "|--------------------------------------------------------------------------------------------\n" +
+                "|url         ='" + url + '\'' +"\n"+
+                "|title       ='" + title + '\'' +"\n"+
+                "|description ='" + description + "'\n" +
+                "|--------------------------------------------------------------------------------------------\n";
     }
 }
