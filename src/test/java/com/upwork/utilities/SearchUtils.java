@@ -5,13 +5,7 @@ In this class only general utility methods that are NOT related to some specific
  */
 
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-public class GoogleUtils {
+public class SearchUtils {
 
     public static boolean doesSearchResultExist(String text){
         boolean result=true;

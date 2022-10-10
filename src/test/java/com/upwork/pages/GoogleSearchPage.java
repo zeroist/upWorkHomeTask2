@@ -16,12 +16,12 @@ public class GoogleSearchPage {
     @FindBy(name = "q")
     public WebElement searchInput;
 
-    @FindBy(xpath = "//*[id='result-stats']")
+    @FindBy(id = "result-stats")
     public WebElement resultStats;
 
     //*[@class='appbar' or @id='taw']
 
-    @FindBy(xpath = "//*[@id='pnnext' or @class='sb_pagN sb_pagN_bp b_widePag sb_bp ']")
+    @FindBy(xpath = "//*[@id='pnnext']")
     public WebElement nextPage;
 
 

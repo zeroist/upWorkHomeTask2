@@ -3,21 +3,19 @@ package com.upwork.tests;
 import com.upwork.pages.GoogleSearchPage;
 import com.upwork.utilities.ConfigurationReader;
 import com.upwork.utilities.Driver;
-import com.upwork.utilities.GoogleUtils;
+import com.upwork.utilities.SearchUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 
-import java.time.Duration;
 import java.util.*;
 
 
-public class GoogleSearchFunctionality {
+public class SearchFunctionality {
 
     public static void main(String[] args) {
-        String searchText = "fgsdghsfddhdg";
+        String searchText = "serdar olgun";
         ConfigurationReader.setBrowser("chrome");
         ConfigurationReader.setSearchEngine("google");
 
@@ -25,12 +23,12 @@ public class GoogleSearchFunctionality {
         Driver.getDriver().get(searchEngine);
         Driver.getDriver().manage().deleteAllCookies();
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(30));
 
 
         Map<String, List<SearchResultClass>> allSearchResulListFromGoogle = new LinkedHashMap<>();
 
         GoogleSearchPage googleSearchPage = new GoogleSearchPage();
+        searchText = searchText.toLowerCase();
         googleSearchPage.searchInput.sendKeys(searchText + Keys.ENTER);
 
 
@@ -38,23 +36,23 @@ public class GoogleSearchFunctionality {
         List<WebElement> descriptionList = googleSearchPage.description;
         List<WebElement> titleList = googleSearchPage.title;
 
-        String url = "", description = "", title = "";
+        String url, description, title;
 
         List<SearchResultClass> searchResultList = new ArrayList<>();
         int totalSearchResultNumber = 0;
         String previousUrl = "";
 
         while (true) {
-            if (!GoogleUtils.doesSearchResultExist(googleSearchPage.resultStats.getText())) {
-                System.out.println("There is no search result for " + searchText + " Please try a different search text");
-                throw new InputMismatchException("There is no search result for " + searchText + " Please try a different search text");
+            if (SearchUtils.doesSearchResultExist(googleSearchPage.resultStats.getText())) {
+                System.out.println("There is no search result for \"" + searchText + "\" Please try a different search text");
+                System.exit(1);
             }
 
             for (int i = 0; i < descriptionList.size() && totalSearchResultNumber < 10; i++) {
 
-                url = urlList.get(i).getAttribute("href");
-                description = descriptionList.get(i).getText();
-                title = titleList.get(i).getText();
+                url = urlList.get(i).getAttribute("href").toLowerCase();
+                description = descriptionList.get(i).getText().toLowerCase();
+                title = titleList.get(i).getText().toLowerCase();
 
                 SearchResultClass searchResultObject = new SearchResultClass(url, title, description);
 
@@ -82,42 +80,47 @@ public class GoogleSearchFunctionality {
         googleSearchPage.searchInput.clear();
 
         allSearchResulListFromGoogle.forEach((keyword, listOfSearchResult) -> {
-            Map<String, Boolean> doesSearchResultContainKeyword = new LinkedHashMap<>();
-            int count = 0;
+          //  Map<String, Boolean> doesSearchResultContainKeyword = new LinkedHashMap<>();
+            int totalCount=0;
             for (SearchResultClass eachResult : listOfSearchResult) {
-                doesSearchResultContainKeyword = new LinkedHashMap<>();
+                int count = 0;
+               // doesSearchResultContainKeyword = new LinkedHashMap<>();
 
                 if (eachResult.getDescription().contains(keyword)) {
                     count++;
                 }
-                ;
+
                 if (eachResult.getTitle().contains(keyword)) {
                     count++;
                 }
-                ;
+
                 if (eachResult.getUrl().contains(keyword)) {
                     count++;
                 }
-                ;
+
 
                 if (count > 0) {
-                    doesSearchResultContainKeyword.put(keyword, true);
-                    System.out.println("keyword " + keyword + " is CONTAINED in the search item below \n " + eachResult);
+                    System.out.println("count = " + count);
+                 //   doesSearchResultContainKeyword.put(keyword, true);
+                    System.out.println("keyword \"" + keyword + "\" is contained "+count+" times in the search item below \n " + eachResult);
                     System.out.println("---------------------------------------------------------------------------");
 
                 } else {
-                    doesSearchResultContainKeyword.put(keyword, false);
-                    System.out.println("keyword " + keyword + " is not CONTAINED in following search item " + eachResult);
+                    System.out.println("count = " + count);
+                  //  doesSearchResultContainKeyword.put(keyword, false);
+                    System.out.println("keyword \"" + keyword + "\" is NOT CONTAINED in following search item " + eachResult);
                     System.out.println("---------------------------------------------------------------------------");
 
                 }
-
+                if (count>0){
+                    totalCount++;
+                }
             }
-            System.out.println(keyword + " is contained in " + count + " search items out of 10");
+            System.out.println(keyword + " is contained in " + totalCount + " search items out of 10");
 
-            doesSearchResultContainKeyword.forEach((x, y) -> {
-                System.out.println(x + "-" + y);
-            });
+          //  doesSearchResultContainKeyword.forEach((x, y) -> {
+           //     System.out.println(x + "-" + y);
+          //  });
 
 
         });
