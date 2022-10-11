@@ -17,7 +17,7 @@ public class SearchFunctionality {
 
     public static void main(String[] args) {
         String searchText = ConfigurationReader.getProperty("searchKeyword");
-        ConfigurationReader.setBrowser("chrome");
+        ConfigurationReader.setBrowser(ConfigurationReader.getProperty("browser"));
         ConfigurationReader.setSearchEngine("google");
 
         String searchEngine = ConfigurationReader.getProperty("searchEngine");
