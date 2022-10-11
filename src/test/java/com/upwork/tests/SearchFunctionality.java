@@ -30,7 +30,7 @@ public class SearchFunctionality {
         Driver.getDriver().get(searchEngine);
         Driver.getDriver().manage().deleteAllCookies();
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
-        Actions actions=new Actions(Driver.getDriver());
+        Actions actions = new Actions(Driver.getDriver());
 
         /**
          * allSearchResulList is map which will store keyword and SearchResultClass object
@@ -40,10 +40,6 @@ public class SearchFunctionality {
         GoogleSearchPage googleSearchPage = new GoogleSearchPage();//page object model object
         searchText = searchText.toLowerCase();
         googleSearchPage.searchInput.sendKeys(searchText + Keys.ENTER);
-        /**
-         * in order to load full page javascriptexecuter scrollInto to View next Page link at the bottom
-         */
-        js.executeScript("arguments[0].scrollIntoView(true);", googleSearchPage.nextPage);
 
 // I create list of Webelements which is needed to create SearchResultClass
         List<WebElement> urlList = googleSearchPage.url;
@@ -66,15 +62,16 @@ public class SearchFunctionality {
          * is not enough to have 10 result, it will go to next page and so on.
          */
         while (true) {
-            js.executeScript("arguments[0].scrollIntoView(true);", googleSearchPage.nextPage);
+
             /**
              * Some search keyword may not result a search result, so I put a condition.
              * for the condition I create method under the utilities/SearchUtils/doesSearchResultExist
              */
-            if (SearchUtils.doesSearchResultExist(googleSearchPage.resultStats.getText())) {
+            if (!SearchUtils.doesSearchResultExist(googleSearchPage.resultStats.getText())) {
                 System.out.println("There is no search result for \"" + searchText + "\" Please try a different search text");
-                System.exit(1);
+                break;
             }
+            js.executeScript("arguments[0].scrollIntoView(true);", googleSearchPage.nextPage);
 
 
             for (int i = 0; i < descriptionList.size() && totalSearchResultNumber < 10; i++) {
@@ -161,7 +158,7 @@ public class SearchFunctionality {
         BingSearchPage bingSearchPage = new BingSearchPage();
         searchText = searchText.toLowerCase();
         bingSearchPage.searchInput.sendKeys(searchText + Keys.ENTER);
-        actions.scrollByAmount(0,10000);
+        actions.scrollByAmount(0, 10000);
 
 
         urlList = bingSearchPage.url;
@@ -174,10 +171,10 @@ public class SearchFunctionality {
 
 
         while (true) {
-            actions.scrollByAmount(0,10000);
+            actions.scrollByAmount(0, 10000);
             if (SearchUtils.doesSearchResultExist(bingSearchPage.resultStats.getText())) {
                 System.out.println("There is no search result for \"" + searchText + "\" Please try a different search text");
-                System.exit(1);
+                break;
             }
 
             for (int i = 0; i < descriptionList.size() && totalSearchResultNumber < 10; i++) {
