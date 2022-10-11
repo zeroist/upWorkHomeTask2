@@ -32,39 +32,54 @@ public class SearchFunctionality {
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
         Actions actions=new Actions(Driver.getDriver());
 
-
+        /**
+         * allSearchResulList is map which will store keyword and SearchResultClass object
+         */
         Map<String, List<SearchResultClass>> allSearchResulList = new LinkedHashMap<>();
 
-        GoogleSearchPage googleSearchPage = new GoogleSearchPage();
+        GoogleSearchPage googleSearchPage = new GoogleSearchPage();//page object model object
         searchText = searchText.toLowerCase();
         googleSearchPage.searchInput.sendKeys(searchText + Keys.ENTER);
+        /**
+         * in order to load full page javascriptexecuter scrollInto to View next Page link at the bottom
+         */
         js.executeScript("arguments[0].scrollIntoView(true);", googleSearchPage.nextPage);
 
-
+// I create list of Webelements which is needed to create SearchResultClass
         List<WebElement> urlList = googleSearchPage.url;
         List<WebElement> descriptionList = googleSearchPage.description;
         List<WebElement> titleList = googleSearchPage.title;
 
         String url, description, title;
-
+//to collect all SearchResult objects into a list, I create a List
         List<SearchResultClass> searchResultList = new ArrayList<>();
-        int totalSearchResultNumber = 0;
-        String previousUrl = "";
+
+        int totalSearchResultNumber = 0;//since total search result has to be 10, I create totalSearchResultNumber to count
+        String previousUrl = "";//this helps us to check if search result is a nested or not.
 
         System.out.println("////////////////////NOW I AM PREPARING SEARCH RESULT REPORT/////////////////////////");
         System.out.println("/////////////////////////////////FOR GOOGLE///////////////////////////////////////////");
 
+
+        /**
+         * I create a while and for loop to make sure that I have 10 search result.if first page of result
+         * is not enough to have 10 result, it will go to next page and so on.
+         */
         while (true) {
             js.executeScript("arguments[0].scrollIntoView(true);", googleSearchPage.nextPage);
+            /**
+             * Some search keyword may not result a search result, so I put a condition.
+             * for the condition I create method under the utilities/SearchUtils/doesSearchResultExist
+             */
             if (SearchUtils.doesSearchResultExist(googleSearchPage.resultStats.getText())) {
                 System.out.println("There is no search result for \"" + searchText + "\" Please try a different search text");
                 System.exit(1);
             }
 
+
             for (int i = 0; i < descriptionList.size() && totalSearchResultNumber < 10; i++) {
 
                 url = urlList.get(i).getAttribute("href").toLowerCase();
-
                 description = descriptionList.get(i).getText().toLowerCase();
                 title = titleList.get(i).getText().toLowerCase();
 
@@ -80,7 +95,7 @@ public class SearchFunctionality {
                 searchResultList.add(searchResultObject);
                 totalSearchResultNumber++;
             }
-            if (totalSearchResultNumber >= 10) {
+            if (totalSearchResultNumber >= 10) {//this make sure that we have 10 results and now we can break the loop.
                 break;
             }
 

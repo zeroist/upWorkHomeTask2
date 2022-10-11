@@ -9,7 +9,7 @@ public class SearchUtils {
     /**
      *
      * @param text
-     * @return boolean and it returns false it means there is no search result.
+     * @return boolean and if it returns false it means there is no search result.
      */
     public static boolean doesSearchResultExist(String text){
         boolean result=true;
