@@ -172,7 +172,7 @@ public class SearchFunctionality {
 
         while (true) {
             actions.scrollByAmount(0, 10000);
-            if (SearchUtils.doesSearchResultExist(bingSearchPage.resultStats.getText())) {
+            if (!SearchUtils.doesSearchResultExist(bingSearchPage.resultStats.getText())) {
                 System.out.println("There is no search result for \"" + searchText + "\" Please try a different search text");
                 break;
             }
