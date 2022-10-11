@@ -8,6 +8,7 @@ import com.upwork.utilities.SearchUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 
 import java.util.*;
@@ -24,6 +25,7 @@ public class SearchFunctionality {
         Driver.getDriver().get(searchEngine);
         Driver.getDriver().manage().deleteAllCookies();
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        Actions actions=new Actions(Driver.getDriver());
 
 
         Map<String, List<SearchResultClass>> allSearchResulList = new LinkedHashMap<>();
@@ -137,6 +139,7 @@ public class SearchFunctionality {
         BingSearchPage bingSearchPage = new BingSearchPage();
         searchText = searchText.toLowerCase();
         bingSearchPage.searchInput.sendKeys(searchText + Keys.ENTER);
+        actions.scrollByAmount(0,10000);
 
 
         urlList = bingSearchPage.url;
@@ -149,6 +152,7 @@ public class SearchFunctionality {
 
 
         while (true) {
+            actions.scrollByAmount(0,10000);
             if (SearchUtils.doesSearchResultExist(bingSearchPage.resultStats.getText())) {
                 System.out.println("There is no search result for \"" + searchText + "\" Please try a different search text");
                 System.exit(1);
@@ -174,6 +178,7 @@ public class SearchFunctionality {
             if (totalSearchResultNumber >= 10) {
                 break;
             }
+
             js.executeScript("arguments[0].scrollIntoView(true);", bingSearchPage.nextPage);
             bingSearchPage.nextPage.click();
 
