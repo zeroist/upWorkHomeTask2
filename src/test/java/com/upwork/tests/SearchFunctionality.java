@@ -55,6 +55,7 @@ public class SearchFunctionality {
             for (int i = 0; i < descriptionList.size() && totalSearchResultNumber < 10; i++) {
 
                 url = urlList.get(i).getAttribute("href").toLowerCase();
+
                 description = descriptionList.get(i).getText().toLowerCase();
                 title = titleList.get(i).getText().toLowerCase();
 
@@ -85,7 +86,7 @@ public class SearchFunctionality {
 
         allSearchResulList.forEach((keyword, listOfSearchResult) -> {
             //  Map<String, Boolean> doesSearchResultContainKeyword = new LinkedHashMap<>();
-            int numberofItem=0;
+            int numberofItem = 0;
             int totalCount = 0;
             for (SearchResultClass eachResult : listOfSearchResult) {
                 int count = 0;
@@ -167,6 +168,10 @@ public class SearchFunctionality {
                 description = descriptionList.get(i).getText().toLowerCase();
                 title = titleList.get(i).getText().toLowerCase();
                 url = urlList.get(i).getAttribute("href").toLowerCase();
+
+                if (url.startsWith("https://www.bing.com/ck/a?")) {
+                    url = urlList.get(i).getAttribute("hover-url").toLowerCase();
+                }
 
                 SearchResultClass searchResultObject = new SearchResultClass(url, title, description);
 
