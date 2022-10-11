@@ -92,7 +92,7 @@ public class SearchFunctionality {
                 searchResultList.add(searchResultObject);
                 totalSearchResultNumber++;
             }
-            if (totalSearchResultNumber >= 10) {//this make sure that we have 10 results and now we can break the loop.
+            if (totalSearchResultNumber >= 10) {//this make sure that we have 10 results,and now we can break the loop.
                 break;
             }
 
@@ -246,6 +246,7 @@ public class SearchFunctionality {
 
 
         });
+        Driver.getDriver().quit();
 
 
     }

@@ -17,3 +17,4 @@ added in POM.xml file.
 * The creation of the java files under the `utilities` package and the structures in them are entirely owned by the
   creator of this project.
 * In order to configure Search text (keyword) and browser you can use ``configuration.properties`` file in the root.
+* In order to run test just run the main method in `~src/test/java/com/upwork/tests/SearchFunctionality.java`
