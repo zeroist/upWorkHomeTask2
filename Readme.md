@@ -15,4 +15,5 @@ This project has been created for answering the case study problems from `UPWORK
 added in POM.xml file.
 * The browser to be used **must be installed** on the computer where the tests will be run. Please check the `configuration.properties` file.
 * The creation of the java files under the `utilities` package and the structures in them are entirely owned by the
-    creator of this project.
+  creator of this project.
+* In order to configure Search text (keyword) and browser you can use ``configuration.properties`` file in the root.
