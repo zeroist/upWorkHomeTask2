@@ -105,15 +105,13 @@ public class SearchFunctionality {
                 }
                 numberofItem++;
 
+                System.out.print("Result Report for Search Item " + numberofItem + "/10 = ");
                 if (count > 0) {
-
-                    System.out.print("Result Report for Search Item " + numberofItem + "/10 = ");
 
                     System.out.println("=> keyword \"" + keyword + "\" is found " + count + " times in the search item below\n" + eachResult);
 
                 } else {
 
-                    System.out.print("Result Report for Search Item " + numberofItem + "/10 = ");
                     System.out.println("keyword \"" + keyword + "\" is NOT FOUND in following search item\n" + eachResult);
 
                 }
@@ -122,7 +120,6 @@ public class SearchFunctionality {
                 }
             }
             System.out.println(keyword + " is found in " + totalCount + " search items out of 10 with GOOGLE");
-
 
 
         });
@@ -210,14 +207,13 @@ public class SearchFunctionality {
                 }
 
                 numberofItem++;
+                System.out.print("Result Report for Search Item " + numberofItem + "/10 = ");
                 if (count > 0) {
-                    System.out.print("Result Report for Search Item " + numberofItem + "/10 = ");
 
                     System.out.println("=> keyword \"" + keyword + "\" is found " + count + " times in the search item below\n" + eachResult);
 
                 } else {
 
-                    System.out.print("Result Report for Search Item " + numberofItem + "/10 = ");
                     System.out.println("keyword \"" + keyword + "\" is NOT FOUND in following search item\n" + eachResult);
 
                 }
@@ -226,7 +222,6 @@ public class SearchFunctionality {
                 }
             }
             System.out.println(keyword + " is found in " + totalCount + " search items out of 10 with BING");
-
 
 
         });
