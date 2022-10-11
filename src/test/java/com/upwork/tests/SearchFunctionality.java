@@ -108,11 +108,11 @@ public class SearchFunctionality {
                 if (count > 0) {
 
                     System.out.print("Result Report for Search Item " + numberofItem + "/10 = ");
-                    //   doesSearchResultContainKeyword.put(keyword, true);
+
                     System.out.println("=> keyword \"" + keyword + "\" is found " + count + " times in the search item below\n" + eachResult);
 
                 } else {
-                    //  doesSearchResultContainKeyword.put(keyword, false);
+
                     System.out.print("Result Report for Search Item " + numberofItem + "/10 = ");
                     System.out.println("keyword \"" + keyword + "\" is NOT FOUND in following search item\n" + eachResult);
 
@@ -123,9 +123,6 @@ public class SearchFunctionality {
             }
             System.out.println(keyword + " is found in " + totalCount + " search items out of 10 with GOOGLE");
 
-            //  doesSearchResultContainKeyword.forEach((x, y) -> {
-            //     System.out.println(x + "-" + y);
-            //  });
 
 
         });
@@ -215,11 +212,11 @@ public class SearchFunctionality {
                 numberofItem++;
                 if (count > 0) {
                     System.out.print("Result Report for Search Item " + numberofItem + "/10 = ");
-                    //   doesSearchResultContainKeyword.put(keyword, true);
+
                     System.out.println("=> keyword \"" + keyword + "\" is found " + count + " times in the search item below\n" + eachResult);
 
                 } else {
-                    //  doesSearchResultContainKeyword.put(keyword, false);
+
                     System.out.print("Result Report for Search Item " + numberofItem + "/10 = ");
                     System.out.println("keyword \"" + keyword + "\" is NOT FOUND in following search item\n" + eachResult);
 
@@ -230,9 +227,6 @@ public class SearchFunctionality {
             }
             System.out.println(keyword + " is found in " + totalCount + " search items out of 10 with BING");
 
-            //  doesSearchResultContainKeyword.forEach((x, y) -> {
-            //     System.out.println(x + "-" + y);
-            //  });
 
 
         });
