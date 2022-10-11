@@ -1,3 +1,5 @@
+//do not touch this class.
+// if you want to configure the Search item or browser go to configuration.properties in the root.
 package com.upwork.tests;
 
 import com.upwork.pages.BingSearchPage;
