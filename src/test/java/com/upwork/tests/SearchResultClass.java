@@ -1,3 +1,5 @@
+//I create a class to have objects of each Search result item which is consist of url,title and description
+//I implement encapsulation oop concept.
 package com.upwork.tests;
 
 import java.util.List;
