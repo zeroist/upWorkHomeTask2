@@ -16,7 +16,7 @@ import java.util.*;
 public class SearchFunctionality {
 
     public static void main(String[] args) {
-        String searchText = "serdar olgun";
+        String searchText = ConfigurationReader.getProperty("searchKeyword");
         ConfigurationReader.setBrowser("chrome");
         ConfigurationReader.setSearchEngine("google");
 
@@ -42,6 +42,9 @@ public class SearchFunctionality {
         List<SearchResultClass> searchResultList = new ArrayList<>();
         int totalSearchResultNumber = 0;
         String previousUrl = "";
+
+        System.out.println("////////////////////NOW I AM PREPARING SEARCH RESULT REPORT/////////////////////////");
+        System.out.println("/////////////////////////////////FOR GOOGLE///////////////////////////////////////////");
 
         while (true) {
             if (SearchUtils.doesSearchResultExist(googleSearchPage.resultStats.getText())) {
@@ -109,6 +112,7 @@ public class SearchFunctionality {
 
                 } else {
                     //  doesSearchResultContainKeyword.put(keyword, false);
+                    System.out.print("Result Report for Search Item " + numberofItem + "/10 = ");
                     System.out.println("keyword \"" + keyword + "\" is NOT FOUND in following search item\n" + eachResult);
 
                 }
@@ -116,7 +120,7 @@ public class SearchFunctionality {
                     totalCount++;
                 }
             }
-            System.out.println(keyword + " is found in " + totalCount + " search items out of 10");
+            System.out.println(keyword + " is found in " + totalCount + " search items out of 10 with GOOGLE");
 
             //  doesSearchResultContainKeyword.forEach((x, y) -> {
             //     System.out.println(x + "-" + y);
@@ -125,7 +129,8 @@ public class SearchFunctionality {
 
         });
 
-        System.out.println("////////////////////bing/////////////////////////");
+        System.out.println("////////////////////NOW I AM PREPARING SEARCH RESULT REPORT/////////////////////////");
+        System.out.println("/////////////////////////////////FOR BING///////////////////////////////////////////");
 
         ConfigurationReader.setSearchEngine("bing");
 
@@ -210,6 +215,7 @@ public class SearchFunctionality {
 
                 } else {
                     //  doesSearchResultContainKeyword.put(keyword, false);
+                    System.out.print("Result Report for Search Item " + numberofItem + "/10 = ");
                     System.out.println("keyword \"" + keyword + "\" is NOT FOUND in following search item\n" + eachResult);
 
                 }
@@ -217,7 +223,7 @@ public class SearchFunctionality {
                     totalCount++;
                 }
             }
-            System.out.println(keyword + " is found in " + totalCount + " search items out of 10");
+            System.out.println(keyword + " is found in " + totalCount + " search items out of 10 with BING");
 
             //  doesSearchResultContainKeyword.forEach((x, y) -> {
             //     System.out.println(x + "-" + y);
