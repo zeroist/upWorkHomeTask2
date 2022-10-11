@@ -32,8 +32,8 @@ public class SearchFunctionality {
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
         Actions actions = new Actions(Driver.getDriver());
 
-        /**
-         * allSearchResulList is map which will store keyword and SearchResultClass object
+        /*
+          allSearchResulList is map which will store keyword and SearchResultClass object
          */
         Map<String, List<SearchResultClass>> allSearchResulList = new LinkedHashMap<>();
 
@@ -57,15 +57,15 @@ public class SearchFunctionality {
         System.out.println("/////////////////////////////////FOR GOOGLE///////////////////////////////////////////");
 
 
-        /**
-         * I create a while and for loop to make sure that I have 10 search result.if first page of result
-         * is not enough to have 10 result, it will go to next page and so on.
+        /*
+          I create a while and for loop to make sure that I have 10 search result.if first page of result
+          is not enough to have 10 result, it will go to next page and so on.
          */
         while (true) {
 
-            /**
-             * Some search keyword may not result a search result, so I put a condition.
-             * for the condition I create method under the utilities/SearchUtils/doesSearchResultExist
+            /*
+              Some search keyword may not result a search result, so I put a condition.
+              for the condition I create method under the utilities/SearchUtils/doesSearchResultExist
              */
             if (!SearchUtils.doesSearchResultExist(googleSearchPage.resultStats.getText())) {
                 System.out.println("There is no search result for \"" + searchText + "\" Please try a different search text");
