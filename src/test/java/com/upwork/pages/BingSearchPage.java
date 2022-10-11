@@ -30,15 +30,4 @@ public class BingSearchPage {
     @FindBy(xpath = "//li[@class=\"b_algo\"]//div[@class=\"b_title\"]/h2/a")
     public List<WebElement> url;
 
-
-//    @FindBy(xpath = "//p[starts-with(@class,\" b_lineclamp\")]")
-//    public List<WebElement> description;
-//
-//    @FindBy(xpath = "//p[starts-with(@class,\" b_lineclamp\")]/../preceding-sibling::div[@class=\"b_title\"]/a")
-//    public List<WebElement> url;
-//
-//    @FindBy(xpath = "//p[starts-with(@class,\" b_lineclamp\")]/../preceding-sibling::div[@class=\"b_title\"]/h2/a")
-//    public List<WebElement> title;
-
-
 }

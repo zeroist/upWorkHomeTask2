@@ -34,28 +34,4 @@ public class GoogleSearchPage {
     @FindBy(xpath = "(//div[@class=\"MjjYud\"])//div[starts-with(@class,\"VwiC3b\")]/../preceding-sibling::div[contains(@href,\"\")]//h3")
     public List<WebElement> title;
 
-
-
-// (//div[@class="MjjYud"])//div[starts-with(@class,"VwiC3b")]/../preceding-sibling::div[contains(@class,"jGGQ5e")]//h3
-
-    // //div[@class="MjjYud"]
-    // //div[@class="MjjYud"]//h3
-    // //div[@class="MjjYud"]//h3/..
-    //div[@class="TbwUpd NJjxre"]//cite[@class="iUh30 qLRx3b tjvcx"]
-
-    //div[@class="VwiC3b yXK7lf MUxGbd yDYNvb lyLwlc lEBKkf"]
-
-// full 3 lü   (//div[@class="MjjYud"])//div[starts-with(@class,"VwiC3b")]/../preceding-sibling::div[contains(@class,"jGGQ5e")]
-// başlık   (//div[@class="MjjYud"])//div[starts-with(@class,"VwiC3b")]/../preceding-sibling::div[contains(@class,"jGGQ5e")]//h3
-//link    (//div[@class="MjjYud"])//div[starts-with(@class,"VwiC3b")]/../preceding-sibling::div[contains(@class,"jGGQ5e")]/div[@class="yuRUbf"]/a
-// içerik   (//div[@class="MjjYud"])//div[starts-with(@class,"VwiC3b")]
-
-    //div[starts-with(@class,'VwiC3b')]
-
-
-
-
-
-
-
 }

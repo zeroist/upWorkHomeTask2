@@ -36,6 +36,7 @@ public class SearchFunctionality {
         GoogleSearchPage googleSearchPage = new GoogleSearchPage();
         searchText = searchText.toLowerCase();
         googleSearchPage.searchInput.sendKeys(searchText + Keys.ENTER);
+        js.executeScript("arguments[0].scrollIntoView(true);", googleSearchPage.nextPage);
 
 
         List<WebElement> urlList = googleSearchPage.url;
@@ -52,6 +53,7 @@ public class SearchFunctionality {
         System.out.println("/////////////////////////////////FOR GOOGLE///////////////////////////////////////////");
 
         while (true) {
+            js.executeScript("arguments[0].scrollIntoView(true);", googleSearchPage.nextPage);
             if (SearchUtils.doesSearchResultExist(googleSearchPage.resultStats.getText())) {
                 System.out.println("There is no search result for \"" + searchText + "\" Please try a different search text");
                 System.exit(1);
@@ -79,7 +81,7 @@ public class SearchFunctionality {
             if (totalSearchResultNumber >= 10) {
                 break;
             }
-            js.executeScript("arguments[0].scrollIntoView(true);", googleSearchPage.nextPage);
+
             googleSearchPage.nextPage.click();
 
 
