@@ -85,12 +85,10 @@ public class SearchFunctionality {
         googleSearchPage.searchInput.clear();
 
         allSearchResulList.forEach((keyword, listOfSearchResult) -> {
-            //  Map<String, Boolean> doesSearchResultContainKeyword = new LinkedHashMap<>();
             int numberofItem = 0;
             int totalCount = 0;
             for (SearchResultClass eachResult : listOfSearchResult) {
                 int count = 0;
-                // doesSearchResultContainKeyword = new LinkedHashMap<>();
 
                 if (eachResult.getDescription().contains(keyword)) {
                     count++;
@@ -187,12 +185,10 @@ public class SearchFunctionality {
         bingSearchPage.searchInput.clear();
 
         allSearchResulList.forEach((keyword, listOfSearchResult) -> {
-            //  Map<String, Boolean> doesSearchResultContainKeyword = new LinkedHashMap<>();
             int numberofItem = 0;
             int totalCount = 0;
             for (SearchResultClass eachResult : listOfSearchResult) {
                 int count = 0;
-                // doesSearchResultContainKeyword = new LinkedHashMap<>();
 
                 if (eachResult.getDescription().contains(keyword)) {
                     count++;
