@@ -1,6 +1,5 @@
 package com.upwork.pages;
 
-import com.upwork.tests.SearchResultClass;
 import com.upwork.utilities.Driver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
