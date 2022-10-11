@@ -5,6 +5,7 @@ import com.upwork.pages.GoogleSearchPage;
 import com.upwork.utilities.ConfigurationReader;
 import com.upwork.utilities.Driver;
 import com.upwork.utilities.SearchUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -12,6 +13,8 @@ import org.openqa.selenium.interactions.Actions;
 
 
 import java.util.*;
+
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 
 public class SearchFunctionality {
@@ -166,7 +169,8 @@ public class SearchFunctionality {
                 url = urlList.get(i).getAttribute("href").toLowerCase();
 
                 if (url.startsWith("https://www.bing.com/ck/a?")) {
-                    url = urlList.get(i).getAttribute("hover-url").toLowerCase();
+                    url = Driver.getDriver().findElement(with(By.tagName("cite")).below(titleList.get(i))).getText();
+
                 }
 
                 SearchResultClass searchResultObject = new SearchResultClass(url, title, description);
