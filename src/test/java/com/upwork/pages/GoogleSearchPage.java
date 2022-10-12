@@ -18,7 +18,6 @@ public class GoogleSearchPage {
     @FindBy(id = "result-stats")
     public WebElement resultStats;
 
-    //*[@class='appbar' or @id='taw']
 
     @FindBy(xpath = "//*[@id='pnnext']")
     public WebElement nextPage;

@@ -1,10 +1,5 @@
 package com.upwork.utilities;
 
-/*
-In this class only general utility methods that are NOT related to some specific page.
- */
-
-
 public class SearchUtils {
     /**
      * @param text
