@@ -127,7 +127,7 @@ public class SearchFunctionality {
                 System.out.print("Result Report for Search Item " + numberofItem + "/10 = ");
                 if (count > 0) {
 
-                    System.out.println("=> keyword \"" + keyword + "\" is found " + count + " times in the search item below\n" + eachResult);
+                    System.out.println("=> keyword \"" + keyword + "\" is found " + count + " attributes in the search item below\n" + eachResult);
 
                 } else {
 
@@ -231,7 +231,7 @@ public class SearchFunctionality {
                 System.out.print("Result Report for Search Item " + numberofItem + "/10 = ");
                 if (count > 0) {
 
-                    System.out.println("=> keyword \"" + keyword + "\" is found " + count + " times in the search item below\n" + eachResult);
+                    System.out.println("=> keyword \"" + keyword + "\" is found " + count + " attributes in the search item below\n" + eachResult);
 
                 } else {
 
